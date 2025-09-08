@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenité - Luxury Fashion for the Soul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+        }
+        .hero-bg {
+            background: linear-gradient(to right, #6c5ce7, #a29bfe, #fd79a8);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .product-card {
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 92% 100%, 8% 100%);
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #6c5ce7, #fd79a8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108,92,231,0.3);
+        }
+        .cart-icon {
+            position: relative;
+        }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #e17055;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .filter-btn.active {
+            background: #6c5ce7;
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border: none;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #6c5ce7;
+        }
+        .wishlist-icon {
+            color: #e17055;
+            transition: all 0.3s ease;
+        }
+        .wishlist-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <img src="assets/Serenite_logo_60x60.png" alt="Serenité brand logo with elegant serif typography featuring a serene dove perched on a minimalist geometric shape, symbolizing tranquility and luxury in soft pastel colors" class="w-15 h-15 rounded-full" />
+                    <h1 class="text-3xl font-bold text-gray-800">Serenité</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-indigo-600 transition-colors">Home</a>
+                    <a href="#products" class="text-gray-700 hover:text-indigo-600 transition-colors">Products</a>
+                    <a href="#about" class="text-gray-700 hover:text-indigo-600 transition-colors">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition-colors">Contact</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="cart-icon">
+                        <button onclick="openCartModal()" class="text-gray-700 hover:text-indigo-600 transition-colors">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                        </button>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </div>
+                    <div>
+                        <i id="wishlist-icon" class="fas fa-heart wishlist-icon" onclick="toggleWishlist()"></i>
+                    </div>
+                    <button onclick="openLoginModal()" class="text-gray-700 hover:text-indigo-600 transition-colors">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg py-24 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-6xl font-light mb-6">Discover Inner Peace</h2>
+            <p class="text-xl mb-8 opacity-90">Elegant fashion that whispers serenity to your soul</p>
+            <a href="#products" class="btn-primary text-lg">Explore Collection</a>
+            <div class="mt-12">
+                <img src="assets/ChatGPT Image Sep 3, 2025, 09_44_26 PM.png" alt="Serene fashion model in flowing white dress standing in a tranquil garden with soft sunlight filtering through trees, embodying elegance and tranquility in Serenité's luxury aesthetic" class="rounded-lg shadow-xl" />
+            </div>
+        </div>
+    </section>
+
+<!-- Filter Section -->
+<section class="py-8 bg-white shadow-sm">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-center flex-wrap gap-4">
+      <a href="all.html" class="filter-btn active btn-primary">All</a>
+      <a href="dress.html" class="filter-btn btn-primary">Dresses</a>
+      <a href="tops.html" class="filter-btn btn-primary">Tops</a>
+      <a href="bottoms.html" class="filter-btn btn-primary">Bottoms</a>
+      <a href="accessories.html" class="filter-btn btn-primary">Accessories</a>
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- Products Section -->
+    <section id="products" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-light text-center mb-12 text-gray-800">Elegant Collection</h2>
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be loaded dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-8 lg:mb-0">
+                    <img src="assets/3191002583891128954_309854321.jpg" alt="Serenité's serene boutique interior with minimalist racks displaying luxury dresses, soft lighting, and a peaceful ambiance with floral arrangements and elegant mannequins" class="rounded-lg shadow-lg" />
+                </div>
+                <div class="lg:w-1/2 lg:pl-12">
+                    <h2 class="text-4xl font-light mb-6 text-gray-800">About Serenité</h2>
+                    <p class="text-lg text-gray-700 mb-6">Founded in 2017, Serenité is privately owned and operated by CEO Anastasya Clarissa Kiem. With a keen eye, Anastasya was able to identify a missing piece in the women's apparel market by bringing sexy clubwear and jeans for women to the forefront of the affordable fashion industry. Anastasya says, "We've revolutionized fashion by making our customers part of the conversation from concept to delivery. We stay ahead of the fashion curve and the competition by engaging with our community daily to ensure we're delivering what they need as quickly as possible." She pioneered the use of Instagram as a platform to connect and engage with customers in a way never before possible. Through this first milestone, Serenite's success was born. Serenite opened its first location in Plaza Singapore.</p>
+                    <blockquote class="text-xl italic text-gray-600 border-l-4 border-indigo-500 pl-4">
+                        "True luxury is finding serenity in every thread."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+       <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-light text-center mb-12 text-gray-800">Connect with Us</h2>
+            <div class="max-w-lg mx-auto">
+                <form id="contact-form" class="bg-white p-8 rounded-lg shadow-lg">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="name">Name</label>
+                        <input class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none" type="text" id="name" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="email">Email</label>
+                        <input class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none" type="email" id="email" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2" for="message">Message</label>
+                        <textarea class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none" id="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full">Send Serenity</button>
+                </form>
+            </div>
+
+            <!-- Google Maps Embed -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-light text-center mb-6 text-gray-800">Find Us on Google Maps</h3>
+                <div class="overflow-hidden rounded-lg shadow-lg">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127653.06348836013!2d103.77646537210654!3d1.3520830068403678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da177c5c5e5f55%3A0x7f64f8d6b45a3a3!2sPlaza%20Singapura!5e0!3m2!1sen!2ssg!4v1693745650000!5m2!1sen!2ssg" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Serenité. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-indigo-400 transition-colors"><i class="fab fa-facebook text-lg"></i></a>
+                <a href="#" class="hover:text-indigo-400 transition-colors"><i class="fab fa-twitter text-lg"></i></a>
+    <a href="https://www.instagram.com/anastasyakiem" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="margin-right: 15px;">
+        <i class="fab fa-instagram text-lg" style="color: #fa117e;"></i>
+    </a>
+            </div>
+            <div class="mt-6">
+                <img src="assets/Serenite_logo_from_big_300x150.png" alt="Serenité footer emblem depicting a minimalist lotus flower in pastel purple with ornate serif lettering, representing peace and luxury elegantly" class="mx-auto rounded" />
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCartModal()">&times;</span>
+            <h2 class="text-3xl font-light mb-6 text-gray-800">Your Serene Cart</h2>
+            <div id="cart-items" class="space-y-4"></div>
+            <div class="mt-8 border-t pt-6">
+                <p class="text-right text-xl font-bold text-gray-800">Total: $<span id="cart-total">0.00</span></p>
+                <button onclick="checkout()" class="btn-primary mt-4">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2 class="text-3xl font-light mb-6 text-gray-800">Welcome Back</h2>
+            <form id="login-form">
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2" for="login-email">Email</label>
+                    <input class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none" type="email" id="login-email" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2" for="login-password">Password</label>
+                    <input class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-indigo-500 outline-none" type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary w-full mb-4">Login</button>
+                <button type="button" onclick="showSignup()" class="text-gray-700 hover:text-indigo-600 underline">Don't have an account? Sign up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Product data - in a real Node.js app, this would come from a database
+        const products = [
+            { id: 1, name: 'Serenity Off-Shoulder Dress', category: 'dresses', price: 189.99, image: 'assets/Dress/dress1.jpg', alt: 'Flowing maxi dress in soft lavender with delicate lace details and serene garden-inspired floral patterns' },
+            { id: 2, name: 'Elegant Red Dress', category: 'tops', price: 79.99, image: 'assets/Dress/dress2.jpg', alt: 'Elegant blouse with billowing sleeves and subtle pearl buttons in calming pastel blue' },
+            { id: 3, name: 'Glamour Serenity Red Dress', category: 'bottoms', price: 109.99, image: 'assets/Dress/dress3.jpg', alt: 'High-waisted skirt with gentle pleats and soft fabric flow in tranquil rose pink' },
+            { id: 4, name: 'Serenity for Beach Dress', category: 'tops', price: 69.99, image: 'assets/Dress/dress4.jpg', alt: 'Crop top with minimalist design and subtle embroidery in warm sunset orange tones' },
+            { id: 5, name: 'Glamourous Red Dress', category: 'bottoms', price: 139.99, image: 'assets/Dress/dress5.jpg', alt: 'Wide-leg pants with harmonious patterns and organic fabric in grounding earth tones' },
+            { id: 6, name: 'Fantastica Red Dress', category: 'accessories', price: 49.99, image: 'assets/Dress/dress6.jpg', alt: 'Silk scarf with flowing watercolor prints representing universal harmony and balance' }
+        ];
+
+        let cart = [];
+        let total = 0;
+        let wishlist = [];
+
+        // Load products
+        function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            products.forEach(product => {
+                const card = `
+                    <div class="product-card bg-white p-6 shadow-md rounded-lg text-center">
+                        <img src="${product.image}" alt="${product.alt}" class="w-full h-64 object-cover mb-4 rounded" />
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">${product.name}</h3>
+                        <p class="text-gray-600 mb-4">$${product.price}</p>
+                        <button class="btn-primary mr-2" onclick="addToCart(${product.id})">Add to Cart</button>
+                        <button class="text-gray-500 hover:text-indigo-600 transition-colors" onclick="addToWishlist(${product.id})"><i class="fas fa-heart"></i></button>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const grid = document.getElementById('products-grid');
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            
+            grid.innerHTML = '';
+            filtered.forEach(product => {
+                const card = `
+                    <div class="product-card bg-white p-6 shadow-md rounded-lg text-center">
+                        <img src="${product.image}" alt="${product.alt}" class="w-full h-64 object-cover mb-4 rounded" />
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">${product.name}</h3>
+                        <p class="text-gray-600 mb-4">$${product.price}</p>
+                        <button class="btn-primary mr-2" onclick="addToCart(${product.id})">Add to Cart</button>
+                        <button class="text-gray-500 hover:text-indigo-600 transition-colors" onclick="addToWishlist(${product.id})"><i class="fas fa-heart"></i></button>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Add to cart
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            total += product.price;
+            updateCartCount();
+            showAlert(`${product.name} added to cart`);
+        }
+
+        // Add to wishlist
+        function addToWishlist(id) {
+            const product = products.find(p => p.id === id);
+            if (!wishlist.includes(id)) {
+                wishlist.push(id);
+                showAlert(`${product.name} added to wishlist`);
+            }
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        // Open cart modal
+        function openCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                cartItems.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                        <div>
+                            <span class="font-semibold">${item.name}</span>
+                        </div>
+                        <span class="text-gray-600">$${item.price}</span>
+                        <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+            modal.style.display = 'block';
+        }
+
+        // Close cart modal
+        function closeCartModal() { 
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        // Remove from cart
+        function removeFromCart(id) {
+            const index = cart.findIndex(item => item.id === id);
+            if (index > -1) {
+                total -= cart[index].price;
+                cart.splice(index, 1);
+                updateCartCount();
+                openCartModal();
+            }
+        }
+
+        // Checkout
+        function checkout() {
+            alert('Checkout functionality would integrate with payment gateway in full implementation');
+        }
+
+        // Toggle wishlist
+        function toggleWishlist() {
+            const icon = document.getElementById('wishlist-icon');
+            icon.classList.toggle('fas');
+            icon.classList.toggle('far');
+        }
+
+        // Show alert
+        function showAlert(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.innerHTML = `
+                <div class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50 animate-bounce">
+                    <span class="font-bold">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 3000);
+        }
+
+        // Open login modal
+        function openLoginModal() {
+            document.getElementById('login-modal').style.display = 'block';
+        }
+
+        // Close login modal
+        function closeLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // Show signup (placeholder)
+        function showSignup() {
+            alert('Signup form would be shown here');
+        }
+
+        // Handle contact form (connect to server.js)
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    try {
+        const res = await fetch("http://localhost:3000/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        const result = await res.text();
+        alert(result);  // server.js akan balikin "Email terkirim!" atau error
+        this.reset();
+    } catch (err) {
+        alert("⚠️ Gagal mengirim pesan.");
+    }
+});
+
+
+        // Handle login form
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login functionality would be implemented with authentication service');
+            this.reset();
+            closeLoginModal();
+        });
+
+        // Load initial products
+        loadProducts();
+        
+    </script>
+</body>
+</html>

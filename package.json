@@ -1,0 +1,27 @@
+{
+  "name": "serenite-ecommerce",
+  "version": "1.0.0",
+  "description": "A serene e-commerce website for luxury fashion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemailer": "^7.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "keywords": [
+    "ecommerce",
+    "fashion",
+    "luxury",
+    "serenity"
+  ],
+  "author": "",
+  "license": "MIT"
+}

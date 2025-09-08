@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serenité - Products</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {font-family: sans-serif; margin:0; padding:0;}
+    .product-card {border:1px solid #ddd; border-radius:8px; padding:16px; text-align:center;}
+    .pagination {display:flex; justify-content:center; gap:8px; margin:20px 0;}
+    .pagination button {padding:6px 12px; border:1px solid #6c5ce7; border-radius:6px;}
+    .pagination button.active {background:#6c5ce7; color:white;}
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Serenité</h1>
+    <a href="index.html" class="text-indigo-600 hover:underline">⬅ Back to Home</a>
+  </header>
+
+  <main class="p-6">
+    <h2 id="page-title" class="text-3xl font-light mb-6"></h2>
+    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="pagination" class="pagination"></div>
+  </main>
+
+  <script>
+    // Dummy 200 products
+    const products = [];
+    for (let i = 1; i <= 200; i++) {
+      const category = i % 4 === 0 ? 'dresses' : i % 4 === 1 ? 'tops' : i % 4 === 2 ? 'bottoms' : 'accessories';
+      products.push({
+        id: i,
+        name: category.charAt(0).toUpperCase() + category.slice(1) + " " + i,
+        category,
+        price: (Math.random()*200+20).toFixed(2),
+        image: `https://picsum.photos/300/400?random=${i}`
+      });
+    }
+
+    // Get category from URL
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('cat') || 'all';
+
+    const filtered = category==='all' ? products : products.filter(p=>p.category===category);
+
+    document.getElementById("page-title").textContent = 
+      category==='all' ? "All Products" : category.toUpperCase();
+
+    function renderPage(page=1) {
+      const perPage=50;
+      const start=(page-1)*perPage;
+      const end=start+perPage;
+      const grid=document.getElementById("products-grid");
+      grid.innerHTML="";
+      filtered.slice(start,end).forEach(p=>{
+        grid.innerHTML+=`
+          <div class="product-card bg-white shadow">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-64 object-cover mb-3 rounded">
+            <h3 class="text-lg font-semibold">${p.name}</h3>
+            <p class="text-gray-600 mb-2">$${p.price}</p>
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded">Add to Cart</button>
+          </div>
+        `;
+      });
+
+      const totalPages=Math.ceil(filtered.length/perPage);
+      const pag=document.getElementById("pagination");
+      pag.innerHTML="";
+      for(let i=1;i<=totalPages;i++){
+        pag.innerHTML+=`<button class="${i===page?'active':''}" onclick="renderPage(${i})">${i}</button>`;
+      }
+    }
+
+    renderPage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessories - Serenité</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <!-- Logo -->
+    <a href="index.html" class="text-2xl font-bold text-gray-800">Serenité</a>
+
+    <!-- Menu selalu tampil -->
+    <div class="flex gap-6 font-medium">
+      <a href="dresses.html" class="hover:text-indigo-600">Dresses</a>
+      <a href="tops.html" class="hover:text-indigo-600">Tops</a>
+      <a href="bottoms.html" class="hover:text-indigo-600">Bottoms</a>
+      <a href="accessories.html" class="hover:text-indigo-600">Accessories</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- Hero Section -->
+<section class="relative h-[400px] flex items-center justify-center text-center text-white overflow-hidden">
+  <!-- Background image -->
+  <img src="https://picsum.photos/1200/600?random=21" 
+       alt="Elegant model wearing luxury dress from Serenité" 
+       class="absolute inset-0 w-full h-full object-cover">
+  <!-- Overlay gradient -->
+  <div class="absolute inset-0 bg-gradient-to-r from-pink-600/70 via-purple-600/70 to-indigo-700/70"></div>
+
+<a href="index.html" 
+   class="absolute top-6 right-6 text-white font-medium hover:underline transition">
+   Back to Home
+</a>
+
+
+  <!-- Content -->
+  <div class="relative z-10">
+    <h1 class="text-5xl md:text-6xl font-extrabold drop-shadow-lg mb-4 animate-fadeInDown">Accessories Collection</h1>
+    <p class="text-lg md:text-xl opacity-90 animate-fadeIn">Discover elegance in every silhouette</p>
+  </div>
+</section>
+
+<!-- Animations -->
+<style>
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInDown { animation: fadeInDown 1s ease forwards; }
+.animate-fadeIn { animation: fadeInUp 1.2s ease forwards; animation-delay: 0.3s; }
+</style>
+
+
+<!-- Animations -->
+<style>
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInDown { animation: fadeInDown 1s ease forwards; }
+.animate-fadeInUp { animation: fadeInUp 1s ease forwards; animation-delay: 0.3s; }
+.animate-fadeIn { animation: fadeInUp 1.2s ease forwards; animation-delay: 0.6s; }
+</style>
+
+
+  <!-- Product Grid -->
+  <main class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-light text-center mb-10">50 Elegant Tops Collection</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="dress-grid">
+      <!-- Produk akan di-load via JS -->
+    </div>
+
+   
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-6">
+    <p>&copy; 2025 Serenité. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Dummy 50 dresses
+    const dresses = [];
+    for (let i = 1; i <= 50; i++) {
+      dresses.push({
+        name: "Accessories Collection " + i,
+        price: (Math.random() * 200 + 50).toFixed(2),
+        image: `https://picsum.photos/400/500?random=${i}`
+      });
+    }
+
+    const grid = document.getElementById("dress-grid");
+    dresses.forEach(d => {
+      const card = document.createElement("div");
+      card.className = "bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition";
+      card.innerHTML = `
+        <img src="${d.image}" class="w-full h-64 object-cover">
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">${d.name}</h3>
+          <p class="text-gray-600 mb-4">$${d.price}</p>
+          <button class="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">Add to Cart</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
